@@ -57,7 +57,7 @@ FOUNDATION_EXPORT NSString *const kBCMDispose;
 FOUNDATION_EXPORT NSString *const kPrefObservingRegion;
 FOUNDATION_EXPORT NSString *const kPrefServiceRunning;
 FOUNDATION_EXPORT NSString *const kPrefStopWithTerminate;
-FOUNDATION_EXPORT NSString *const kkSettingsIosActivityType;
+FOUNDATION_EXPORT NSString *const kSettingsIosActivityType;
 @end
 
 NS_ASSUME_NONNULL_END

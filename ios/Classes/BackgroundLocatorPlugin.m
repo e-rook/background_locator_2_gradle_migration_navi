@@ -204,7 +204,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
           } else if ([activityTypeString isEqualToString:@"fitness"]) {
               _locationManager.activityType = CLActivityTypeFitness;
           } else if ([activityTypeString isEqualToString:@"navigation"]) {
-              _locationManager.activityType = CLActivityTypeNavigation;
+              _locationManager.activityType = CLActivityTypeOtherNavigation;
           } else if ([activityTypeString isEqualToString:@"airborne"]) {
               _locationManager.activityType = CLActivityTypeAirborne;
           } else {
