@@ -17,6 +17,9 @@ class Keys {
   static const String METHOD_PLUGIN_UPDATE_NOTIFICATION =
       'LocatorPlugin.updateNotification';
 
+static const String SETTINGS_IOS_ACTIVITY_TYPE =
+      'settings_ios_activityType';
+
   static const String ARG_IS_MOCKED = 'is_mocked';
   static const String ARG_LATITUDE = 'latitude';
   static const String ARG_LONGITUDE = 'longitude';

@@ -180,34 +180,50 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [_registrar addMethodCallDelegate:self channel:_callbackChannel];
 }
 
-- (void)registerLocator:(int64_t)callback
-           initCallback:(int64_t)initCallback
-  initialDataDictionary:(NSDictionary*)initialDataDictionary
-        disposeCallback:(int64_t)disposeCallback
-               settings: (NSDictionary*)settings {
-    [self->_locationManager requestAlwaysAuthorization];
-        
-    long accuracyKey = [[settings objectForKey:kSettingsAccuracy] longValue];
-    CLLocationAccuracy accuracy = [Util getAccuracy:accuracyKey];
-    double distanceFilter= [[settings objectForKey:kSettingsDistanceFilter] doubleValue];
-    bool  showsBackgroundLocationIndicator=[[settings objectForKey:kSettingsShowsBackgroundLocationIndicator] boolValue];
-    bool  stopWithTerminate=[[settings objectForKey:kSettingsStopWithTerminate] boolValue];
+ - (void)registerLocator:(int64_t)callback
+             initCallback:(int64_t)initCallback
+    initialDataDictionary:(NSDictionary*)initialDataDictionary
+          disposeCallback:(int64_t)disposeCallback
+                 settings: (NSDictionary*)settings {
+      [self->_locationManager requestAlwaysAuthorization];
 
-    _locationManager.desiredAccuracy = accuracy;
-    _locationManager.distanceFilter = distanceFilter;
-    
-    if (@available(iOS 11.0, *)) {
-      _locationManager.showsBackgroundLocationIndicator = showsBackgroundLocationIndicator;
-    }
-    
-    if (@available(iOS 9.0, *)) {
-        _locationManager.allowsBackgroundLocationUpdates = YES;
-    }
-    
-    [PreferencesManager saveDistanceFilter:distanceFilter];
-    [PreferencesManager setStopWithTerminate:stopWithTerminate];
+      long accuracyKey = [[settings objectForKey:kSettingsAccuracy] longValue];
+      CLLocationAccuracy accuracy = [Util getAccuracy:accuracyKey];
+      double distanceFilter = [[settings objectForKey:kSettingsDistanceFilter] doubleValue];
+      bool showsBackgroundLocationIndicator =
+          [[settings objectForKey:kSettingsShowsBackgroundLocationIndicator] boolValue];
+      bool stopWithTerminate = [[settings objectForKey:kSettingsStopWithTerminate] boolValue];
+      NSString *activityTypeString = [settings objectForKey:kSettingsIosActivityType];
 
-    [PreferencesManager setCallbackHandle:callback key:kCallbackKey];
+      _locationManager.desiredAccuracy = accuracy;
+      _locationManager.distanceFilter = distanceFilter;
+
+      if (@available(iOS 6.0, *)) {
+          if ([activityTypeString isEqualToString:@"automotive"]) {
+              _locationManager.activityType = CLActivityTypeAutomotiveNavigation;
+          } else if ([activityTypeString isEqualToString:@"fitness"]) {
+              _locationManager.activityType = CLActivityTypeFitness;
+          } else if ([activityTypeString isEqualToString:@"navigation"]) {
+              _locationManager.activityType = CLActivityTypeNavigation;
+          } else if ([activityTypeString isEqualToString:@"airborne"]) {
+              _locationManager.activityType = CLActivityTypeAirborne;
+          } else {
+              _locationManager.activityType = CLActivityTypeOther;
+          }
+      }
+
+      if (@available(iOS 11.0, *)) {
+          _locationManager.showsBackgroundLocationIndicator = showsBackgroundLocationIndicator;
+      }
+
+      if (@available(iOS 9.0, *)) {
+          _locationManager.allowsBackgroundLocationUpdates = YES;
+      }
+
+      [PreferencesManager saveDistanceFilter:distanceFilter];
+      [PreferencesManager setStopWithTerminate:stopWithTerminate];
+
+      [PreferencesManager setCallbackHandle:callback key:kCallbackKey];
     
     InitPluggable *initPluggable = [[InitPluggable alloc] init];
     [initPluggable setCallback:initCallback];

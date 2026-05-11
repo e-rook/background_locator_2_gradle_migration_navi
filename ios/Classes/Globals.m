@@ -17,7 +17,7 @@ NSString *const kDisposeCallbackKey = @"dispose_callback_handle_key";
 NSString *const kDistanceFilterKey = @"distance_filter_key";
 NSString *const kChannelId = @"app.yukams/locator_plugin";
 NSString *const kBackgroundChannelId = @"app.yukams/locator_plugin_background";
-
+NSString *const kSettingsIosActivityType = @"settings_ios_activityType";
 NSString *const kMethodServiceInitialized = @"LocatorService.initialized";
 NSString *const kMethodPluginInitializeService = @"LocatorPlugin.initializeService";
 NSString *const kMethodPluginRegisterLocationUpdate = @"LocatorPlugin.registerLocationUpdate";
