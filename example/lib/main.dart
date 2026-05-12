@@ -212,7 +212,8 @@ class _MyAppState extends State<MyApp> {
         iosSettings: IOSSettings(
             accuracy: LocationAccuracy.NAVIGATION,
             distanceFilter: 0,
-            stopWithTerminate: true
+            stopWithTerminate: true,
+            activityType: IOSActivityType.navigation,
         ),
         autoStop: false,
         androidSettings: AndroidSettings(

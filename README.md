@@ -15,6 +15,7 @@ This is a fork of the original background_locator_2 plugin with the following im
 - Fixed JVM target compatibility issues
 - Updated Gradle and Kotlin dependencies
 - Added proper namespace to Android build.gradle
+- Added iOS activity type support for background location tuning
 
 ## Usage with this fork
 
@@ -24,9 +25,26 @@ To use this fork in your Flutter project, add the following to your `pubspec.yam
 dependencies:
   background_locator_2:
     git:
-      url: https://github.com/sultan18kh/background_locator_2_gradle_migration.git
-      ref: fix/gradle-compatibility
+      url: https://github.com/e-rook/background_locator_2_gradle_migration_navi.git
+      ref: feature/activity-type-navigation
 ```
+
+## iOS activity type
+
+This fork exposes an `IOSActivityType` setting for iOS background tracking.
+
+For navigation use cases such as boats or yachts, prefer:
+
+```dart
+iosSettings: IOSSettings(
+  accuracy: LocationAccuracy.NAVIGATION,
+  distanceFilter: 0,
+  activityType: IOSActivityType.navigation,
+),
+```
+
+The `navigation` value maps to Core Location's `CLActivityTypeOtherNavigation`
+on iOS, which is the appropriate mode for transport that does not follow roads.
 
 ![demo](https://raw.githubusercontent.com/RomanJos/background_locator/master/demo.gif)
 
